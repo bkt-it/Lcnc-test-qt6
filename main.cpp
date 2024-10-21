@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 
     MainWindow w;
 
-    w.resize(35,600);
+    w.resize(350,600);
     //w.move(( scr.center() - rect().center() ));
     w.show();
 

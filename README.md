@@ -1,6 +1,7 @@
 SO LINUX MINT 22 .... uname -a --->>  Linux gc81-df 6.10.2-rt14 #1 SMP PREEMPT_RT Thu Oct  3 03:01:10 CEST 2024 x86_64 x86_64 x86_64 GNU/Linux
 
-
+# QT6-lcnc-widget
+test interaction with widget QT6 and Lcnc 2.10.0 --- project file qt6
 
 Used on QT6.7.3 and QTCreator 14
 

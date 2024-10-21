@@ -1,0 +1,912 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>354</width>
+    <height>637</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1250</width>
+    <height>900</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <property name="maximumSize">
+    <size>
+     <width>1240</width>
+     <height>903</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <widget class="QPushButton" name="hal_cmd_1">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>100</y>
+      <width>101</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {font-weight: bold;color: black; border: 2px solid #1c5e12;border-radius: 5px;background: rgba(242, 242, 242, 150); background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #FFFFFD, stop: 0.2 #96ADB2);min-width: 41px;}
+QPushButton:pressed{font-weight: bold;color: black;background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #6F7E81, stop: 0.2 #DCF6FC);border-color: #27d404; border-width: 3px;}
+QPushButton:flat {border: none;}
+QPushButton:default { border-color: cyan;}</string>
+    </property>
+    <property name="text">
+     <string>1</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="hal_cmd_2">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>190</y>
+      <width>101</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {font-weight: bold;color: black; border: 2px solid #1c5e12;border-radius: 5px;background: rgba(242, 242, 242, 150); background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #FFFFFD, stop: 0.2 #96ADB2);min-width: 41px;}
+QPushButton:checked{font-weight: bold;color: black;background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #6F7E81, stop: 0.2 #DCF6FC);border-color: #27d404; border-width: 3px;}
+QPushButton:flat {border: none;}
+QPushButton:default { border-color: cyan;}</string>
+    </property>
+    <property name="text">
+     <string>2</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="hal_cmd_3">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>280</y>
+      <width>101</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {font-weight: bold;color: black; border: 2px solid #1c5e12;border-radius: 5px;background: rgba(242, 242, 242, 150); background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #FFFFFD, stop: 0.2 #96ADB2);min-width: 41px;}
+QPushButton:checked{font-weight: bold;color: black;background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #6F7E81, stop: 0.2 #DCF6FC);border-color: #27d404; border-width: 3px;}
+QPushButton:flat {border: none;}
+QPushButton:default { border-color: cyan;}</string>
+    </property>
+    <property name="text">
+     <string>3</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="hal_cmd_4">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>370</y>
+      <width>101</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {font-weight: bold;color: black; border: 2px solid #1c5e12;border-radius: 5px;background: rgba(242, 242, 242, 150); background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #FFFFFD, stop: 0.2 #96ADB2);min-width: 41px;}
+QPushButton:pressed{font-weight: bold;color: black;background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #6F7E81, stop: 0.2 #DCF6FC);border-color: #27d404; border-width: 3px;}
+QPushButton:flat {border: none;}
+QPushButton:default { border-color: cyan;}</string>
+    </property>
+    <property name="text">
+     <string>4</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="hal_float">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>490</y>
+      <width>181</width>
+      <height>71</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="hal_cmd_5">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>480</y>
+      <width>101</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {font-weight: bold;color: black; border: 2px solid #1c5e12;border-radius: 5px;background: rgba(242, 242, 242, 150); background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #FFFFFD, stop: 0.2 #96ADB2);min-width: 41px;}
+QPushButton:pressed{font-weight: bold;color: black;background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #6F7E81, stop: 0.2 #DCF6FC);border-color: #27d404; border-width: 3px;}
+QPushButton:flat {border: none;}
+QPushButton:default { border-color: cyan;}</string>
+    </property>
+    <property name="text">
+     <string>invio</string>
+    </property>
+   </widget>
+   <widget class="WLED" name="wled_PLC_0_0">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>20</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tlwg Typo</family>
+     </font>
+    </property>
+    <property name="diameter">
+     <double>6.000000000000000</double>
+    </property>
+    <property name="color">
+     <color>
+      <red>46</red>
+      <green>194</green>
+      <blue>126</blue>
+     </color>
+    </property>
+    <property name="state">
+     <bool>false</bool>
+    </property>
+    <property name="flashing">
+     <bool>false</bool>
+    </property>
+    <property name="flashRate">
+     <number>300</number>
+    </property>
+   </widget>
+   <widget class="WLED" name="wled_PLC_0_1">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>20</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tlwg Typo</family>
+     </font>
+    </property>
+    <property name="diameter">
+     <double>6.000000000000000</double>
+    </property>
+    <property name="color">
+     <color>
+      <red>46</red>
+      <green>194</green>
+      <blue>126</blue>
+     </color>
+    </property>
+    <property name="state">
+     <bool>false</bool>
+    </property>
+    <property name="flashing">
+     <bool>false</bool>
+    </property>
+    <property name="flashRate">
+     <number>300</number>
+    </property>
+   </widget>
+   <widget class="WLED" name="wled_PLC_0_2">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>20</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tlwg Typo</family>
+     </font>
+    </property>
+    <property name="diameter">
+     <double>6.000000000000000</double>
+    </property>
+    <property name="color">
+     <color>
+      <red>46</red>
+      <green>194</green>
+      <blue>126</blue>
+     </color>
+    </property>
+    <property name="state">
+     <bool>false</bool>
+    </property>
+    <property name="flashing">
+     <bool>false</bool>
+    </property>
+    <property name="flashRate">
+     <number>300</number>
+    </property>
+   </widget>
+   <widget class="WLED" name="wled_PLC_0_3">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>20</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tlwg Typo</family>
+     </font>
+    </property>
+    <property name="diameter">
+     <double>6.000000000000000</double>
+    </property>
+    <property name="color">
+     <color>
+      <red>46</red>
+      <green>194</green>
+      <blue>126</blue>
+     </color>
+    </property>
+    <property name="state">
+     <bool>false</bool>
+    </property>
+    <property name="flashing">
+     <bool>false</bool>
+    </property>
+    <property name="flashRate">
+     <number>300</number>
+    </property>
+   </widget>
+   <widget class="WLED" name="wled_PLC_0_4">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>20</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tlwg Typo</family>
+     </font>
+    </property>
+    <property name="diameter">
+     <double>6.000000000000000</double>
+    </property>
+    <property name="color">
+     <color>
+      <red>46</red>
+      <green>194</green>
+      <blue>126</blue>
+     </color>
+    </property>
+    <property name="state">
+     <bool>false</bool>
+    </property>
+    <property name="flashing">
+     <bool>false</bool>
+    </property>
+    <property name="flashRate">
+     <number>300</number>
+    </property>
+   </widget>
+   <widget class="WLED" name="wled_PLC_0_5">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>20</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tlwg Typo</family>
+     </font>
+    </property>
+    <property name="diameter">
+     <double>6.000000000000000</double>
+    </property>
+    <property name="color">
+     <color>
+      <red>46</red>
+      <green>194</green>
+      <blue>126</blue>
+     </color>
+    </property>
+    <property name="state">
+     <bool>false</bool>
+    </property>
+    <property name="flashing">
+     <bool>false</bool>
+    </property>
+    <property name="flashRate">
+     <number>300</number>
+    </property>
+   </widget>
+   <widget class="WLED" name="wled_PLC_0_6">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>20</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tlwg Typo</family>
+     </font>
+    </property>
+    <property name="diameter">
+     <double>6.000000000000000</double>
+    </property>
+    <property name="color">
+     <color>
+      <red>46</red>
+      <green>194</green>
+      <blue>126</blue>
+     </color>
+    </property>
+    <property name="state">
+     <bool>false</bool>
+    </property>
+    <property name="flashing">
+     <bool>false</bool>
+    </property>
+    <property name="flashRate">
+     <number>300</number>
+    </property>
+   </widget>
+   <widget class="WLED" name="wled_PLC_0_7">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>20</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tlwg Typo</family>
+     </font>
+    </property>
+    <property name="diameter">
+     <double>6.000000000000000</double>
+    </property>
+    <property name="color">
+     <color>
+      <red>46</red>
+      <green>194</green>
+      <blue>126</blue>
+     </color>
+    </property>
+    <property name="state">
+     <bool>false</bool>
+    </property>
+    <property name="flashing">
+     <bool>false</bool>
+    </property>
+    <property name="flashRate">
+     <number>300</number>
+    </property>
+   </widget>
+   <widget class="WLED" name="wled_PLC_0_8">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>20</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tlwg Typo</family>
+     </font>
+    </property>
+    <property name="diameter">
+     <double>6.000000000000000</double>
+    </property>
+    <property name="color">
+     <color>
+      <red>46</red>
+      <green>194</green>
+      <blue>126</blue>
+     </color>
+    </property>
+    <property name="state">
+     <bool>false</bool>
+    </property>
+    <property name="flashing">
+     <bool>false</bool>
+    </property>
+    <property name="flashRate">
+     <number>300</number>
+    </property>
+   </widget>
+   <widget class="WLED" name="wled_PLC_0_9">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>20</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tlwg Typo</family>
+     </font>
+    </property>
+    <property name="diameter">
+     <double>6.000000000000000</double>
+    </property>
+    <property name="color">
+     <color>
+      <red>46</red>
+      <green>194</green>
+      <blue>126</blue>
+     </color>
+    </property>
+    <property name="state">
+     <bool>false</bool>
+    </property>
+    <property name="flashing">
+     <bool>false</bool>
+    </property>
+    <property name="flashRate">
+     <number>300</number>
+    </property>
+   </widget>
+   <widget class="WLED" name="wled_PLC_0_10">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>20</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tlwg Typo</family>
+     </font>
+    </property>
+    <property name="diameter">
+     <double>6.000000000000000</double>
+    </property>
+    <property name="color">
+     <color>
+      <red>46</red>
+      <green>194</green>
+      <blue>126</blue>
+     </color>
+    </property>
+    <property name="state">
+     <bool>false</bool>
+    </property>
+    <property name="flashing">
+     <bool>false</bool>
+    </property>
+    <property name="flashRate">
+     <number>300</number>
+    </property>
+   </widget>
+   <widget class="WLED" name="wled_PLCO_0_8">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>60</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tlwg Typo</family>
+     </font>
+    </property>
+    <property name="diameter">
+     <double>6.000000000000000</double>
+    </property>
+    <property name="color">
+     <color>
+      <red>145</red>
+      <green>65</green>
+      <blue>172</blue>
+     </color>
+    </property>
+    <property name="state">
+     <bool>false</bool>
+    </property>
+    <property name="flashing">
+     <bool>false</bool>
+    </property>
+    <property name="flashRate">
+     <number>300</number>
+    </property>
+   </widget>
+   <widget class="WLED" name="wled_PLCO_0_9">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>60</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tlwg Typo</family>
+     </font>
+    </property>
+    <property name="diameter">
+     <double>6.000000000000000</double>
+    </property>
+    <property name="color">
+     <color>
+      <red>145</red>
+      <green>65</green>
+      <blue>172</blue>
+     </color>
+    </property>
+    <property name="state">
+     <bool>false</bool>
+    </property>
+    <property name="flashing">
+     <bool>false</bool>
+    </property>
+    <property name="flashRate">
+     <number>300</number>
+    </property>
+   </widget>
+   <widget class="WLED" name="wled_PLCO_0_1">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>60</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tlwg Typo</family>
+     </font>
+    </property>
+    <property name="diameter">
+     <double>6.000000000000000</double>
+    </property>
+    <property name="color">
+     <color>
+      <red>145</red>
+      <green>65</green>
+      <blue>172</blue>
+     </color>
+    </property>
+    <property name="state">
+     <bool>false</bool>
+    </property>
+    <property name="flashing">
+     <bool>false</bool>
+    </property>
+    <property name="flashRate">
+     <number>300</number>
+    </property>
+   </widget>
+   <widget class="WLED" name="wled_PLCO_0_7">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>60</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tlwg Typo</family>
+     </font>
+    </property>
+    <property name="diameter">
+     <double>6.000000000000000</double>
+    </property>
+    <property name="color">
+     <color>
+      <red>145</red>
+      <green>65</green>
+      <blue>172</blue>
+     </color>
+    </property>
+    <property name="state">
+     <bool>false</bool>
+    </property>
+    <property name="flashing">
+     <bool>false</bool>
+    </property>
+    <property name="flashRate">
+     <number>300</number>
+    </property>
+   </widget>
+   <widget class="WLED" name="wled_PLCO_0_5">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>60</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tlwg Typo</family>
+     </font>
+    </property>
+    <property name="diameter">
+     <double>6.000000000000000</double>
+    </property>
+    <property name="color">
+     <color>
+      <red>145</red>
+      <green>65</green>
+      <blue>172</blue>
+     </color>
+    </property>
+    <property name="state">
+     <bool>false</bool>
+    </property>
+    <property name="flashing">
+     <bool>false</bool>
+    </property>
+    <property name="flashRate">
+     <number>300</number>
+    </property>
+   </widget>
+   <widget class="WLED" name="wled_PLCO_0_10">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>60</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tlwg Typo</family>
+     </font>
+    </property>
+    <property name="diameter">
+     <double>6.000000000000000</double>
+    </property>
+    <property name="color">
+     <color>
+      <red>145</red>
+      <green>65</green>
+      <blue>172</blue>
+     </color>
+    </property>
+    <property name="state">
+     <bool>false</bool>
+    </property>
+    <property name="flashing">
+     <bool>false</bool>
+    </property>
+    <property name="flashRate">
+     <number>300</number>
+    </property>
+   </widget>
+   <widget class="WLED" name="wled_PLCO_0_0">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>60</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tlwg Typo</family>
+     </font>
+    </property>
+    <property name="diameter">
+     <double>6.000000000000000</double>
+    </property>
+    <property name="color">
+     <color>
+      <red>145</red>
+      <green>65</green>
+      <blue>172</blue>
+     </color>
+    </property>
+    <property name="state">
+     <bool>false</bool>
+    </property>
+    <property name="flashing">
+     <bool>false</bool>
+    </property>
+    <property name="flashRate">
+     <number>300</number>
+    </property>
+   </widget>
+   <widget class="WLED" name="wled_PLCO_0_4">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>60</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tlwg Typo</family>
+     </font>
+    </property>
+    <property name="diameter">
+     <double>6.000000000000000</double>
+    </property>
+    <property name="color">
+     <color>
+      <red>145</red>
+      <green>65</green>
+      <blue>172</blue>
+     </color>
+    </property>
+    <property name="state">
+     <bool>false</bool>
+    </property>
+    <property name="flashing">
+     <bool>false</bool>
+    </property>
+    <property name="flashRate">
+     <number>300</number>
+    </property>
+   </widget>
+   <widget class="WLED" name="wled_PLCO_0_6">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>60</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tlwg Typo</family>
+     </font>
+    </property>
+    <property name="diameter">
+     <double>6.000000000000000</double>
+    </property>
+    <property name="color">
+     <color>
+      <red>145</red>
+      <green>65</green>
+      <blue>172</blue>
+     </color>
+    </property>
+    <property name="state">
+     <bool>false</bool>
+    </property>
+    <property name="flashing">
+     <bool>false</bool>
+    </property>
+    <property name="flashRate">
+     <number>300</number>
+    </property>
+   </widget>
+   <widget class="WLED" name="wled_PLCO_0_3">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>60</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tlwg Typo</family>
+     </font>
+    </property>
+    <property name="diameter">
+     <double>6.000000000000000</double>
+    </property>
+    <property name="color">
+     <color>
+      <red>145</red>
+      <green>65</green>
+      <blue>172</blue>
+     </color>
+    </property>
+    <property name="state">
+     <bool>false</bool>
+    </property>
+    <property name="flashing">
+     <bool>false</bool>
+    </property>
+    <property name="flashRate">
+     <number>300</number>
+    </property>
+   </widget>
+   <widget class="WLED" name="wled_PLCO_0_2">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>60</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tlwg Typo</family>
+     </font>
+    </property>
+    <property name="diameter">
+     <double>6.000000000000000</double>
+    </property>
+    <property name="color">
+     <color>
+      <red>145</red>
+      <green>65</green>
+      <blue>172</blue>
+     </color>
+    </property>
+    <property name="state">
+     <bool>false</bool>
+    </property>
+    <property name="flashing">
+     <bool>false</bool>
+    </property>
+    <property name="flashRate">
+     <number>300</number>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>WLED</class>
+   <extends>QWidget</extends>
+   <header>WLED.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

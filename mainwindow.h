@@ -96,10 +96,10 @@
 #include <QKeyEvent>
 #include <QInputDialog>
 
-
-#include <QtWebEngineWidgets>
-#include <QtWebEngineCore>
-#include <QtWebView/QtWebView>
+//
+//#include <QtWebEngineWidgets>
+//#include <QtWebEngineCore>
+//#include <QtWebView/QtWebView>
 
 
 
@@ -131,6 +131,11 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    QTimer timer;
+    QTimer plc_timer;
+    QTimer ethercat_timer;
+    QTimer infoCPU_timer;
+
 
 
 
@@ -146,6 +151,11 @@ public slots:
         void toggleBnt_hal(bool pressVal);
         void momentaryBnt_hal_ON();
         void momentaryBnt_hal_OFF();
+        void updateFval(float val1);
+        void updateLcecIn();
+        void motPinOn(int idOn);
+        void motPinOff(int idOff);
+        void updnmlval();
 
 
 
