@@ -19,11 +19,11 @@ endif()
 # print for debugging
 message(STATUS "Home directory: ${HOME_DIR}")
 
-#set(QT_DEBUG_FIND_PACKAGE ON)
+set(QT_DEBUG_FIND_PACKAGE ON)
 
 # Add WebEngineWidgets to your needs.
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Gui Widgets Sql Network Multimedia MultimediaWidgets Designer Charts WebView) # WebEngineWidgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui Widgets Sql Network Multimedia MultimediaWidgets Designer Charts WebView) # WebEngineWidgets)
+find_package(QT NAMES Qt6 QT5 REQUIRED COMPONENTS Core Gui Widgets Sql Network Multimedia MultimediaWidgets Designer Charts WebView PrintSupport WebEngineWidgets)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui Widgets Sql Network Multimedia MultimediaWidgets Designer Charts WebView PrintSupport WebEngineWidgets)
 #find_package(Qt6 REQUIRED COMPONENTS WebEngineWidgets)
 
 # Set variables.
@@ -144,8 +144,9 @@ target_link_libraries(bkt PRIVATE
     Qt${QT_VERSION_MAJOR}::MultimediaWidgets
     Qt${QT_VERSION_MAJOR}::Designer
     Qt${QT_VERSION_MAJOR}::Charts
-    #Qt${QT_VERSION_MAJOR}::WebEngineWidgets
     Qt${QT_VERSION_MAJOR}::WebView
+    Qt${QT_VERSION_MAJOR}::PrintSupport
+    Qt${QT_VERSION_MAJOR}::WebEngineWidgets
 
     linuxcnchal linuxcncini linuxcnc_a nml rs274_ tooldata
     GLU GL tirpc

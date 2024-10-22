@@ -217,7 +217,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 
-
+    ui->webW->load(QUrl("https:google.com"));
+    ui->webW->show();
 
 
 
@@ -234,6 +235,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    ui->webW->load(QUrl("about:blank"));
+    halClose();
     delete ui;
 }
 
@@ -478,7 +481,7 @@ void MainWindow::updateLcecIn(){
     /**********************************************************/
     /* SCAN INPUT in lcec.0.1.din-1...                        */
     /**********************************************************/
-   /* for(plcInNr=0; plcInNr<8; plcInNr++)
+    for(plcInNr=0; plcInNr<8; plcInNr++)
     {
         plcInC = "in" + QString::number(plcInNr);
         ledInC = "wled_PLC_0_" + QString::number(plcInNr);
@@ -487,14 +490,14 @@ void MainWindow::updateLcecIn(){
             if(get_PLC_input(plcInC) == 1){ if(lbl)lbl->setState(true);}
             else{ if(lbl)lbl->setState(false);}
         }
-    }*/
+    }
     //qDebug() << Q_FUNC_INFO << "abbiamo wled_PLC_0_"  << ledInC;
     plcInNr=0;
 
     /*****************************************/
     /* SCAN OUTPUT out10 lcec.0.3.dout-1 ... */
     /*****************************************/
-   /* for(plcInNr=0; plcInNr<8; plcInNr++)
+    for(plcInNr=0; plcInNr<8; plcInNr++)
     {
         if(plcInNr==0){plcInC = "out1" + QString::number(plcInNr) + "a";}
         else{plcInC = "out1" + QString::number(plcInNr);}
@@ -505,7 +508,7 @@ void MainWindow::updateLcecIn(){
             else{ if(lbl)lbl->setState(false);}
         }
 
-    }*/
+    }
 
 
 
