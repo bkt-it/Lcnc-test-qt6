@@ -156,6 +156,7 @@ public slots:
         void motPinOn(int idOn);
         void motPinOff(int idOff);
         void updnmlval();
+        void changeFloatVal();
 
 
 

@@ -50,9 +50,11 @@ include_directories(${HOME_DIR}/Qt/Tools/QtCreator/lib/Qt/plugins/designer)
 include_directories(${HOME_DIR}/.progetti/wled-designer-plugin)
 
 set(PROJECT_SOURCES
+        get_command.h
         main.cpp
         mainwindow.cpp
         mainwindow.h
+        send_command.h
         WLED.cpp
         WLED.h
         mainwindow.ui
@@ -63,6 +65,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(bkt
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        get_command.h
+        send_command.h
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET bkt APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

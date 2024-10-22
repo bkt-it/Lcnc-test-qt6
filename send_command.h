@@ -16,16 +16,6 @@
 #include <emc.hh>
 #include <emc_nml.hh>
 
-#include "hal.h"
-#include "rtapi.h"          /* RTAPI realtime OS API */
-#include "rtapi_string.h"
-#include "rtapi_errno.h"
-
-#include "config.h"
-#include "rtapi.h"          /* RTAPI realtime OS API */
-#include "hal.h"            /* HAL public API decls */
-#include <rtapi_mutex.h>
-#include <rtapi_string.h>
 
 #include "config.h"
 #include "rtapi.h"          /* RTAPI realtime OS API */
@@ -34,7 +24,11 @@
 #include "halcmd_commands.h"
 #include <rtapi_mutex.h>
 #include <rtapi_string.h>
+#include "rtapi_errno.h"
 
+#include <iostream>
+#include <vector>
+#include <QString>
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -49,25 +43,23 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <QtCore>
+#include <QDebug>
 
 static int set_common(hal_type_t type, void *d_ptr, char *value);
 int set_pin_FLOAT_calc(float pinFVc, QString pinVNc);
+int comp_id = hal_init("axis");
 
-void hal_connection(){
-    //somehow we need this at the startup of lcnc, otherwise we get segmentation fault.
-    int comp_id = hal_init("axis");
+void hal_connection(){    /// CALL THESE ON YOUR MAINWINDOWS OR CAN NOT WORK !!!!!!!!!!!
     hal_comp_name(comp_id);
     hal_malloc(200);
-    //int sigml= hal_signal_new("xxx", HAL_FLOAT );
     hal_ready(comp_id);
 }
 
-//void hal_command_test(){
-//    //to test various hal commands quite easy.
-//    char value[] = "12";
-//    char name[] = "halui.feed-override.counts";
-//    do_setp_cmd(name,value);
-//}
+
+void halClose(){
+    // Cleanup for mainwindows
+    hal_exit(comp_id);
+}
 
 int do_sets_cmd(char *name, char *value) ///../linuxcnc/src/hal/utils/halcmd_commands.c
 {
@@ -76,8 +68,12 @@ int do_sets_cmd(char *name, char *value) ///../linuxcnc/src/hal/utils/halcmd_com
     hal_type_t type;
     void *d_ptr;
 
-    /*QString strOne = QString::fromLocal8Bit(name);
-    char name1[strlen(strOne.toStdString().c_str()) + 0];
+    QString strOne = QString::fromLocal8Bit(name);
+    qDebug() << Q_FUNC_INFO << "Received name =  " << strOne << "  ;";
+
+
+    //QString strOne = QString::fromLocal8Bit(name);
+    /*char name1[strlen(strOne.toStdString().c_str()) + 0];
     char name2[strlen(strOne.toStdString().c_str()) + 0];
     char name3[strlen(strOne.toStdString().c_str()) + 0];
     qDebug() << Q_FUNC_INFO << "Received name =  " << strOne << "  ;";
@@ -87,29 +83,31 @@ int do_sets_cmd(char *name, char *value) ///../linuxcnc/src/hal/utils/halcmd_com
     //rtapi_print_msg(RTAPI_MSG_DBG, "setting signal '%s'\n", name);
     /* get mutex before accessing shared data */
     rtapi_mutex_get(&(hal_data->mutex));
+    qDebug() << Q_FUNC_INFO << "hal_data_mutex name =  " << strOne << "  ;";
     /* search signal list for name */
     sig = halpr_find_sig_by_name(name);
+    qDebug() << Q_FUNC_INFO << "halpr_find_sig_by_name name =  " << strOne << " sig value = " << sig << "  ;";
     if (sig == 0) {
     rtapi_mutex_give(&(hal_data->mutex));
-    //qDebug() << Q_FUNC_INFO << "Param/Pin name error -- not find  ;";
+    qDebug() << Q_FUNC_INFO << "Param/Pin name error -- not find  ;";
     return -EINVAL;
     }
-    //qDebug() << Q_FUNC_INFO << "found it - it have a writer? if it is a port we can set its buffer size ";
+    qDebug() << Q_FUNC_INFO << "found it - it have a writer? if it is a port we can set its buffer size ";
     if ((sig->type != HAL_PORT) && (sig->writers > 0)) {
     rtapi_mutex_give(&(hal_data->mutex));
     //qDebug() << Q_FUNC_INFO << "signal '%s' already has writer(s)";
     return -EINVAL;
     }
-    //qDebug() << Q_FUNC_INFO << " no writer, so we can safely set it";
+    qDebug() << Q_FUNC_INFO << " no writer, so we can safely set it";
     type = sig->type;
     d_ptr = SHMPTR(sig->data_ptr);
     retval = set_common(type, d_ptr, value);
     rtapi_mutex_give(&(hal_data->mutex));
     if (retval == 0) {
     /* print success message */
-   // qDebug() << Q_FUNC_INFO << "Signal '%s' set to %s\n";
+    //qDebug() << Q_FUNC_INFO << "Signal '%s' set to %s\n";
     } else {
-    //qDebug() << Q_FUNC_INFO << "halcmd_error  sets failed;";
+    qDebug() << Q_FUNC_INFO << "halcmd_error  sets failed;";
     }
     return retval;
 }
@@ -147,7 +145,7 @@ int do_setp_cmd(char *name, char *value)
             }
             if(pin->signal != 0) {
                 rtapi_mutex_give(&(hal_data->mutex));
-                qDebug() << Q_FUNC_INFO << "pin '%s' is connected to a signal";
+                //qDebug() << Q_FUNC_INFO << "pin '%s' is connected to a signal";
                 return -EINVAL;
             }
             // d_ptr = (void*)SHMPTR(pin->dummysig);
@@ -191,83 +189,69 @@ static int set_common(hal_type_t type, void *d_ptr, char *value) {
      unsigned uval;
      char *cp = value;
 
-     switch (type) {
-     case HAL_BIT:
-     if ((strcmp("1", value) == 0) || (strcasecmp("TRUE", value) == 0)) {
-         *(hal_bit_t *) (d_ptr) = 1;
-     } else if ((strcmp("0", value) == 0)
-         || (strcasecmp("FALSE", value)) == 0) {
-         *(hal_bit_t *) (d_ptr) = 0;
-     } else {
-         //halcmd_error("value '%s' invalid for bit\n", value);
-         retval = -EINVAL;
-     }
-     break;
-     case HAL_FLOAT:
-     fval = strtod ( value, &cp );
-     if ((*cp != '\0') && (!isspace(*cp))) {
-         /* invalid character(s) in string */
-         //halcmd_error("value '%s' invalid for float\n", value);
-         retval = -EINVAL;
-     } else {
-         *((hal_float_t *) (d_ptr)) = fval;
-     }
-     break;
-     case HAL_S32:
-     lval = strtol(value, &cp, 0);
-     if ((*cp != '\0') && (!isspace(*cp))) {
-         /* invalid chars in string */
-         //halcmd_error("value '%s' invalid for S32\n", value);
-         retval = -EINVAL;
-     } else {
-         *((hal_s32_t *) (d_ptr)) = lval;
-     }
-     break;
-     case HAL_U32:
-     ulval = strtoul(value, &cp, 0);
-     if ((*cp != '\0') && (!isspace(*cp))) {
-         /* invalid chars in string */
-         //halcmd_error("value '%s' invalid for U32\n", value);
-         retval = -EINVAL;
-     } else {
-         *((hal_u32_t *) (d_ptr)) = ulval;
-     }
-     break;
-//     case HAL_PORT:
-//         uval = strtoul(value, &cp, 0);
-//         if ((*cp != '\0') && (!isspace(*cp))) {
-//             //halcmd_error("value '%s' invalid for PORT\n", value);
-//             retval = -EINVAL;
-//         } //else {
-//           //  if((*((hal_port_t*)d_ptr) != 0) && (hal_port_buffer_size(*((hal_port_t*)d_ptr)) > 0)) {
-//                 //halcmd_error("port is already allocated with %u bytes.\n", hal_port_buffer_size(*((hal_port_t*)d_ptr)));
-//           //      retval = -EINVAL;
-//       //  } else {
-//             //*((hal_port_t*) (d_ptr)) = hal_port_alloc(uval);
-//       //  }
-//     }
-//     break;
-     default:
-     /* Shouldn't get here, but just in case... */
-     //halcmd_error("bad type %d\n", type);
-     retval = -EINVAL;
-     }
-     return retval;
+    switch (type) {
+    case HAL_BIT:
+        if ((strcmp("1", value) == 0) || (strcasecmp("TRUE", value) == 0)) {
+            *(hal_bit_t *) (d_ptr) = 1;
+        } else if ((strcmp("0", value) == 0)
+                   || (strcasecmp("FALSE", value)) == 0) {
+            *(hal_bit_t *) (d_ptr) = 0;
+        } else {
+            //halcmd_error("value '%s' invalid for bit\n", value);
+            retval = -EINVAL;
+        }
+        break;
+    case HAL_FLOAT:
+        fval = strtod ( value, &cp );
+        if ((*cp != '\0') && (!isspace(*cp))) {
+            /* invalid character(s) in string */
+            //halcmd_error("value '%s' invalid for float\n", value);
+            retval = -EINVAL;
+        } else {
+            *((hal_float_t *) (d_ptr)) = fval;
+        }
+        break;
+    case HAL_S32:
+        lval = strtol(value, &cp, 0);
+        if ((*cp != '\0') && (!isspace(*cp))) {
+            /* invalid chars in string */
+            //halcmd_error("value '%s' invalid for S32\n", value);
+            retval = -EINVAL;
+        } else {
+            *((hal_s32_t *) (d_ptr)) = lval;
+        }
+        break;
+    case HAL_U32:
+        ulval = strtoul(value, &cp, 0);
+        if ((*cp != '\0') && (!isspace(*cp))) {
+            /* invalid chars in string */
+            //halcmd_error("value '%s' invalid for U32\n", value);
+            retval = -EINVAL;
+        } else {
+            *((hal_u32_t *) (d_ptr)) = ulval;
+        }
+        break;
+        //     case HAL_PORT:
+        //         uval = strtoul(value, &cp, 0);
+        //         if ((*cp != '\0') && (!isspace(*cp))) {
+        //             //halcmd_error("value '%s' invalid for PORT\n", value);
+        //             retval = -EINVAL;
+        //         } //else {
+        //           //  if((*((hal_port_t*)d_ptr) != 0) && (hal_port_buffer_size(*((hal_port_t*)d_ptr)) > 0)) {
+        //                 //halcmd_error("port is already allocated with %u bytes.\n", hal_port_buffer_size(*((hal_port_t*)d_ptr)));
+        //           //      retval = -EINVAL;
+        //       //  } else {
+        //             //*((hal_port_t*) (d_ptr)) = hal_port_alloc(uval);
+        //       //  }
+        //     }
+        //     break;
+    default:
+        /* Shouldn't get here, but just in case... */
+        //halcmd_error("bad type %d\n", type);
+        retval = -EINVAL;
+    }
+    return retval;
 }
-
-
-
-void set_CL_I20_OnOff(bool pinOutValue, QString pinOutName){
-    //char name[] = pinOutName.toStdString().c_str();
-    //qDebug() << Q_FUNC_INFO << "func INPUT " << pinOutValue << "  &  " << pinOutName << "  ;";
-    char name[strlen(pinOutName.toStdString().c_str()) + 1];  // Make sure there's enough space
-    strcpy(name, pinOutName.toStdString().c_str());
-    if(pinOutValue == true){ char valueOn[] = "1"; do_sets_cmd(name,valueOn);}
-    else { char valueOff[] = "0"; do_sets_cmd(name,valueOff);}
-
-}
-
-
 
 int set_pin_FLOAT_calc(float pinFVc, QString pinVNc){
 
@@ -301,10 +285,13 @@ int set_pin_FLOAT_calc(float pinFVc, QString pinVNc){
     rtapi_mutex_give(&(hal_data->mutex));*/
 
     //  ####################  qDebug() << Q_FUNC_INFO << "func INPUT FLOAT " << pinFVc << "  &  " << pinVNc << "  ;";
+     qDebug() << Q_FUNC_INFO << "func INPUT FLOAT " << pinFVc << "  &  " << pinVNc << "  ;";
 
     char name[strlen(pinVNc.toStdString().c_str()) + 1];  // Make sure there's enough space
     strcpy(name, pinVNc.toStdString().c_str());
+     qDebug() << Q_FUNC_INFO << "func INPUT FLOAT NAME" << name << "  ;";
     rtapi_mutex_get(&(hal_data->mutex));
+    qDebug() << Q_FUNC_INFO << "func INPUT FLOAT Nrtapi mutex PASS PASS" << name << "  ;";
 
     sig = halpr_find_sig_by_name(name);
     type = sig->type;
@@ -322,22 +309,22 @@ int set_pin_FLOAT_calc(float pinFVc, QString pinVNc){
     else{
         rtapi_mutex_give(&(hal_data->mutex));
         switch (type)
-                {
-                case HAL_BIT:
-                            Htype = "HAL_BIT";
-                            break;
-                case HAL_FLOAT:
-                            Htype = "HAL_FLOAT";
-                            break;
-                case HAL_S32:
-                            Htype = "HAL_S32";
-                            break;
-                case HAL_U32:
-                            Htype = "HAL_U32";
-                            break;
-                default:
-                            Htype = "ERROR";
-                }
+        {
+        case HAL_BIT:
+            Htype = "HAL_BIT";
+            break;
+        case HAL_FLOAT:
+            Htype = "HAL_FLOAT";
+            break;
+        case HAL_S32:
+            Htype = "HAL_S32";
+            break;
+        case HAL_U32:
+            Htype = "HAL_U32";
+            break;
+        default:
+            Htype = "ERROR";
+        }
         qDebug() << Q_FUNC_INFO << "sig " << name << " is not writable or not exist ... type is:  " << Htype << "  and (sig>0 no good) sig->writers =   "  << sig->writers;
         retval = 100;
     }
@@ -346,6 +333,49 @@ int set_pin_FLOAT_calc(float pinFVc, QString pinVNc){
     return retval;
 
 }
+
+/*void set_CL_I20_OnOff(bool pinOutValue, QString pinOutName){
+    //char name[] = pinOutName.toStdString().c_str();
+    //qDebug() << Q_FUNC_INFO << "func INPUT " << pinOutValue << "  &  " << pinOutName << "  ;";
+    char name[strlen(pinOutName.toStdString().c_str()) + 1];  // Make sure there's enough space
+    strcpy(name, pinOutName.toStdString().c_str());
+    if(pinOutValue == true){ char valueOn[] = "1"; do_sets_cmd(name,valueOn);}
+    else { char valueOff[] = "0"; do_sets_cmd(name,valueOff);}
+
+}*/
+
+/*void set_CL_I20_OnOff(bool pinOutValue, QString pinOutName){
+
+    char value[] = "12";
+    char name[] = "axis.feed-override.counts";
+    do_setp_cmd(name,value);
+
+}*/
+
+void set_CL_I20_OnOff(bool pinOutValue, QString pinOutName) {
+    // Convert boolean to string ("0" for false, "1" for true)
+    const char* constValue = pinOutValue ? "1" : "0";
+
+    // Crea una copia modificabile della stringa constValue
+    char value[2];  // Allocazione per una stringa di un carattere più il terminatore nullo
+    strcpy(value, constValue);  // Copia il contenuto di constValue in 'value'
+
+
+    QString compName="bkt";    // Component name.
+    QString dot=".";            // Dot after compoenent name.
+    //QString result=compName+dot+pinOutName;
+    QString result=pinOutName;
+
+
+
+    // Convert QString to a C-style string for do_setp_cmd
+    QByteArray nameArray = result.toUtf8();  // Convert QString to QByteArray
+    char* name = nameArray.data();    // Get C-style string pointer
+
+    // Call the command with dynamic inputs
+    do_sets_cmd(name, value);
+}
+
 
 
 

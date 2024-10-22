@@ -29,6 +29,9 @@
 #include <rtapi_mutex.h>
 #include <rtapi_string.h>
 
+#include <iostream>
+#include <vector>
+#include <QString>
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -42,7 +45,11 @@
 #include <fnmatch.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <QtCore>
 #include <QDebug>
+
+
+
 
 float get_command(std::string name);
 float get_float_pin_val(QString nV);

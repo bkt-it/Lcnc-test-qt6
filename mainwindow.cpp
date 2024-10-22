@@ -138,7 +138,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-
+    hal_connection();
 
 // ############################# start pgr ########################################
 
@@ -211,6 +211,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->hal_cmd_2, SIGNAL(toggled(bool)), this, SLOT(toggleBnt_hal(bool)));
     connect(ui->hal_cmd_3, SIGNAL(toggled(bool)), this, SLOT(toggleBnt_hal(bool)));
+
+
+    connect(ui->hal_cmd_5, SIGNAL(released()), this, SLOT(changeFloatVal()));
+
+
 
 
 
@@ -303,7 +308,7 @@ void MainWindow::toggleBnt_hal(bool pressVal) //, QString pepper)
     //QString pbAny = btnAny->objectName();
     QPushButton *btn = dynamic_cast<QPushButton*>(sender());
     QString pepper = btn->objectName();
-    //qDebug() << Q_FUNC_INFO << "name Toggle received  :" << pepper;
+    qDebug() << Q_FUNC_INFO << "name Toggle received  :" << pepper;
     //QString pepper = "in10"; //"lcec.0.4.dout-7";  //"in10";
     set_CL_I20_OnOff(pressVal, pepper);
 }
@@ -317,7 +322,7 @@ void MainWindow::momentaryBnt_hal_ON(){
     //ui->wled_1->setState(true);
 
 
-    ////qDebug() << Q_FUNC_INFO << "name Press received  :" << pepperOn;
+    qDebug() << Q_FUNC_INFO << "name Press received  :" << pepperOn;
 }
 
 void MainWindow::momentaryBnt_hal_OFF(){
@@ -328,7 +333,7 @@ void MainWindow::momentaryBnt_hal_OFF(){
     //ui->led_11->LVexchange(false);
     //ui->wled_1->setState(false);
 
-   // //qDebug() << Q_FUNC_INFO << "name Release received  :" << pepperOff;
+   qDebug() << Q_FUNC_INFO << "name Release received  :" << pepperOff;
 }
 
 
@@ -506,9 +511,31 @@ void MainWindow::updateLcecIn(){
 
 }
 
+void MainWindow::changeFloatVal(){
+    float pirl = 0;
+    QString text =ui->hal_float->text();
+
+    // Convert the text to a float
+    bool ok;
+    pirl = text.toFloat(&ok);
+
+    // Check if the conversion was successful
+    if (ok) {
+        // Format the float to 3 decimal places
+        QString formattedValue = QString::number(pirl, 'f', 3);
+
+        // Print the formatted value
+        qDebug() << "Converted value (3 decimal places):" << formattedValue;
+    } else {
+        qDebug() << "Error: Could not convert text to float.";
+    }
+
+    updateFval(pirl);
+}
+
 void MainWindow::updateFval(float val1){
     if(set_pin_FLOAT_calc(val1, maxFalda) > 10){
-        // //qDebug() << Q_FUNC_INFO << "func INPUT FLOAT " << weight << "  &  " << weightT << " have some problem  ;";
+        qDebug() << Q_FUNC_INFO << "func INPUT FLOAT " << val1 << "  &  " << maxFalda << " have some problem  ;";
     }
 }
 
